@@ -107,7 +107,7 @@ const [userAnswer, setuserAnswer] = useState('')
      
 
     </Button>
-    <Button onClick={()=> console.log(userAnswer)}>show ans</Button>
+    {/* <Button onClick={()=> console.log(userAnswer)}>show ans</Button> */}
     
     </div>
   )

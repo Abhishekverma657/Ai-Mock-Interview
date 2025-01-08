@@ -19,17 +19,50 @@ const Feedback = ({params}) => {
       const {interviewId}= use(params)
        const router=useRouter()
        const [feedbackList, setfeedbackList] = useState([])
+        const [total, setTotal] = useState(0)
 
        useEffect(()=>{
      getfeddback()
+    
 
        },[])
      const getfeddback= async()=>{
          const  result =await db.select().from(UserAnswer).where(eq(UserAnswer.mockIdRef,interviewId )).orderBy(UserAnswer.id);
          console.log(result)
          setfeedbackList(result)
+         calculateOverallRating(result)
 
      }
+     const calculateOverallRating = (feedbackList) => {
+       let totalRating =0;
+      if (feedbackList.length === 0) {
+          setTotal(0)
+      } else {
+      
+        totalRating = feedbackList.reduce((acc, feedback) => acc + feedback.rating, 0);
+
+        // Calculate the average rating
+         console.log(totalRating)
+
+
+         
+      
+        const digitSum = totalRating
+            .toString()
+            .split("") // Split into individual characters
+            .filter(char => !isNaN(char)) // Ensure only numeric digits
+            .reduce((acc, digit) => acc + parseInt(digit, 10), 0); // Sum digits
+
+        console.log("Sum of Digits:", digitSum)
+        setTotal(digitSum/feedbackList.length)
+         
+ 
+      
+      }
+  }
+ 
+
+      
   return (
     <div className=' p-10'> 
         <h2 className=' text-3xl font-bold text-green-500'>Congratulation</h2>
@@ -38,7 +71,7 @@ const Feedback = ({params}) => {
         <h2 className=' font-bold text-xl text-gray-500' >No Interview Feedback Record Found</h2>:
         <>
       
-         <h2 className=' text-primary my-3 text-lg'>Your overall interview rating:<strong>7/10</strong></h2>
+         <h2 className=' text-primary my-3 text-lg'>Your overall interview rating:<strong className=' text-yellow-600'>{`${total}/10`}</strong></h2>
          <h2 className=' text-sm text-gray-500'>Find below interview question with  correct answer , Your answer and feedback for improovement</h2>
          {
             feedbackList&& feedbackList.map((item , index)=>(

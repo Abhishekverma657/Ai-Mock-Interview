@@ -22,7 +22,7 @@ const QuestionSection = ({mockInterviewQuestion, activeQuestionIndex}) => {
             {mockInterviewQuestion&&mockInterviewQuestion.map((question,index)=>(
             
                 <h2 className={` text-xs  md:text-sm  text-center cursor-pointer p-2 bg-secondary rounded-full
-                    ${activeQuestionIndex === index ? 'bg-primary text-white' : ''}`} key={index}
+                    ${activeQuestionIndex === index ? 'bg-purple-600 text-white' : ''}`} key={index}
                     >Question #{index+1}</h2>
             ))}
              
